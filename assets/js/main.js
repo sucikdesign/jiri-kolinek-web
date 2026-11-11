@@ -569,8 +569,10 @@
         const x = (e.clientX - r.left) / r.width - 0.5;
         const y = (e.clientY - r.top) / r.height - 0.5;
         stat.classList.add('is-tilting');
-        card.style.setProperty('--ry', (x * 10).toFixed(2) + 'deg');
-        card.style.setProperty('--rx', (y * -10).toFixed(2) + 'deg');
+        card.style.setProperty('--ry', (x * 26).toFixed(2) + 'deg');
+        card.style.setProperty('--rx', (y * -26).toFixed(2) + 'deg');
+        card.style.setProperty('--gx', ((x + 0.5) * 100).toFixed(1) + '%');
+        card.style.setProperty('--gy', ((y + 0.5) * 100).toFixed(1) + '%');
       });
       stat.addEventListener('pointerleave', () => {
         stat.classList.remove('is-tilting');
