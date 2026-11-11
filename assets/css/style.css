@@ -512,8 +512,12 @@ html { scrollbar-color: var(--ink-3) var(--paper); accent-color: var(--orange-in
   background: radial-gradient(circle at var(--gx, 50%) var(--gy, 0%), rgba(247,166,121,.28), rgba(247,166,121,0) 55%);
   opacity: 0; transition: opacity .5s var(--ease);
 }
-.stat__card > * { position: relative; z-index: 1; transform: translateZ(30px); }
-.stat__card .stat__value { transform: translateZ(80px); transition: color .5s var(--ease); }
+.stat__card > * { position: relative; z-index: 1; transition: transform .7s var(--ease), color .5s var(--ease); }
+/* depth only while the card is tilted (mouse); at rest and on touch the content sits flat on the grid */
+@media (hover: hover) and (pointer: fine) {
+  .stat:hover .stat__card > * { transform: translateZ(30px); }
+  .stat:hover .stat__card .stat__value { transform: translateZ(80px); }
+}
 .stat:hover .stat__card {
   --lift: -10px; --z: 24px; --s: 1.02;
   box-shadow: 0 0 0 1px rgba(232,65,26,.28), 0 26px 60px -20px rgba(232,65,26,.52), 0 0 46px -6px rgba(232,65,26,.3);
