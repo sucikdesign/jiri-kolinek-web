@@ -500,7 +500,7 @@ html { scrollbar-color: var(--ink-3) var(--paper); accent-color: var(--orange-in
   height: 100%;
   background: var(--white);
   padding: clamp(20px, 2vw, 32px) clamp(20px, 2vw, 32px) clamp(28px, 3vw, 44px);
-  box-shadow: 0 10px 28px -18px rgba(232,65,26,.35);
+  box-shadow: 0 10px 28px -18px rgba(232,65,26,.28);
   transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translate3d(0, var(--lift, 0px), var(--z, 0px)) scale(var(--s, 1));
   transform-style: preserve-3d;
   transition: transform .7s var(--ease), box-shadow .6s var(--ease);
@@ -516,7 +516,7 @@ html { scrollbar-color: var(--ink-3) var(--paper); accent-color: var(--orange-in
 .stat__card .stat__value { transform: translateZ(80px); transition: color .5s var(--ease); }
 .stat:hover .stat__card {
   --lift: -10px; --z: 24px; --s: 1.02;
-  box-shadow: 0 0 0 1px rgba(232,65,26,.35), 0 26px 60px -20px rgba(232,65,26,.65), 0 0 46px -6px rgba(232,65,26,.38);
+  box-shadow: 0 0 0 1px rgba(232,65,26,.28), 0 26px 60px -20px rgba(232,65,26,.52), 0 0 46px -6px rgba(232,65,26,.3);
 }
 .stat:hover .stat__card::after { opacity: 1; }
 .stat:hover .stat__value { color: var(--orange); }
