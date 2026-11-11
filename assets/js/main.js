@@ -47,7 +47,7 @@
     sig.querySelector('mask').id = 'introSigMask';
     sig.querySelector('.sig__ink').setAttribute('mask', 'url(#introSigMask)');
     $('.intro__sig', intro).appendChild(sig);
-    const pens = $$('.sig__pen path', sig).map(p => { const len = p.getTotalLength(); p.style.strokeDasharray = `${len} ${len}`; p.style.strokeDashoffset = len; return { p, len }; });
+    const pens = $$('.sig__pen path', sig).map(p => { const len = p.getTotalLength(); p.style.strokeDasharray = `${len} ${len}`; p.style.strokeDashoffset = len; p.style.visibility = 'hidden'; return { p, len }; });
     let total = 0; pens.forEach(o => { o.start = total; total += o.len; });
 
     let skipped = false;
@@ -72,7 +72,12 @@
     // 1 — signature
     await tween(1700, p => {
       const drawn = p * total;
-      for (const o of pens) o.p.style.strokeDashoffset = o.len * (1 - clamp((drawn - o.start) / o.len));
+      for (const o of pens) {
+        const local = clamp((drawn - o.start) / o.len);
+        o.p.style.strokeDashoffset = o.len * (1 - local);
+        // round caps of an empty dash still paint a dot in Safari: hide until it starts drawing
+        o.p.style.visibility = local > 0 ? '' : 'hidden';
+      }
     });
     if (!skipped) await sleep(250);
     intro.classList.add('is-sig-out');
@@ -244,6 +249,7 @@
       const len = p.getTotalLength();
       p.style.strokeDasharray = `${len} ${len}`;
       p.style.strokeDashoffset = len;
+      p.style.visibility = 'hidden';
       return { p, len, start: 0 };
     });
     pens.forEach(o => { o.start = penTotal; penTotal += o.len; });
@@ -256,6 +262,7 @@
     for (const o of pens) {
       const local = clamp((drawn - o.start) / o.len);
       o.p.style.strokeDashoffset = o.len * (1 - local);
+      o.p.style.visibility = local > 0 ? '' : 'hidden';
     }
   };
 
