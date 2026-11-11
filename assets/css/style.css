@@ -493,23 +493,34 @@ html { scrollbar-color: var(--ink-3) var(--paper); accent-color: var(--orange-in
 .numbers__head .coords { justify-self: end; text-align: right; color: var(--ink-3); }
 
 .stats { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); column-gap: var(--gutter); }
-.stats { row-gap: var(--gutter); perspective: 1100px; }
-.stat { grid-column: span 3; position: relative; }
+.stats { row-gap: var(--gutter); }
+.stat { grid-column: span 3; position: relative; perspective: 700px; }
 .stat__card {
+  position: relative;
   height: 100%;
   background: var(--white);
   padding: clamp(20px, 2vw, 32px) clamp(20px, 2vw, 32px) clamp(28px, 3vw, 44px);
-  box-shadow: 0 1px 2px rgba(27,26,24,.04), 0 8px 24px -16px rgba(27,26,24,.18);
-  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translate3d(0, var(--lift, 0px), 0);
+  box-shadow: 0 10px 28px -18px rgba(232,65,26,.35);
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translate3d(0, var(--lift, 0px), var(--z, 0px)) scale(var(--s, 1));
   transform-style: preserve-3d;
-  transition: transform .6s var(--ease), box-shadow .6s var(--ease);
+  transition: transform .7s var(--ease), box-shadow .6s var(--ease);
   will-change: transform;
 }
-.stat__card > * { transform: translateZ(18px); }
-.stat__card .stat__value { transform: translateZ(42px); transition: color .5s var(--ease); }
-.stat:hover .stat__card { --lift: -6px; box-shadow: 0 2px 4px rgba(27,26,24,.05), 0 30px 50px -24px rgba(27,26,24,.35); }
+/* glare that follows the pointer, sells the tilt */
+.stat__card::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 0%), rgba(247,166,121,.28), rgba(247,166,121,0) 55%);
+  opacity: 0; transition: opacity .5s var(--ease);
+}
+.stat__card > * { position: relative; z-index: 1; transform: translateZ(30px); }
+.stat__card .stat__value { transform: translateZ(80px); transition: color .5s var(--ease); }
+.stat:hover .stat__card {
+  --lift: -10px; --z: 24px; --s: 1.02;
+  box-shadow: 0 0 0 1px rgba(232,65,26,.35), 0 26px 60px -20px rgba(232,65,26,.65), 0 0 46px -6px rgba(232,65,26,.38);
+}
+.stat:hover .stat__card::after { opacity: 1; }
 .stat:hover .stat__value { color: var(--orange); }
-.stat.is-tilting .stat__card { transition: transform .12s linear, box-shadow .6s var(--ease); }
+.stat.is-tilting .stat__card { transition: transform .15s linear, box-shadow .6s var(--ease); }
 .stat__label { color: var(--ink-2); display: flex; justify-content: space-between; gap: 8px; }
 .stat__value { font-family: var(--display); font-size: var(--fs-mega); line-height: .82; margin-top: var(--space-3); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
 .stat__note { margin-top: 14px; font-size: var(--fs-small); color: var(--ink-2); max-width: 26ch; }
